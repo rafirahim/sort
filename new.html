@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     
+</head>
+<style>
+    * {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font: 14px/18px Tahoma, Arial, sans-serif;
+    background: #f0f7f9;
+}
+
+.container {
+    width: 70vw;
+    margin: auto;
+}
+
+h1 {
+    padding-bottom: 20px;
+    margin-bottom: 40px;
+    border-bottom: 1px #40361E solid;
+    line-height: 1;
+    font-weight: normal;
+    color: #40361E;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+table th,
+table td {
+    padding: 20px 20px;
+    text-align: left;
+  border-left:0 ;
+}
+
+table th {
+    padding: 25px 20px;
+    background-color: #77d5d4;
+    position: relative;
+    cursor: pointer;
+    color: #f2fbfa;
+    border-bottom: solid 15px;
+}
+table th:after {
+    content: "";
+    display: none;
+    width: 0;
+    height: 0;
+    margin-top: -5px;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+}
+table th.asc:after {
+    display: block;
+    border-style: solid;
+    border-width: 0 5px 10px 5px;
+    border-color: transparent transparent #E2E2E2 transparent;
+}
+
+table th.desc:after {
+    display: block;
+    border-style: solid;
+    border-width: 10px 5px 0 5px;
+    border-color: #E2E2E2 transparent transparent transparent;
+}
+
+table tr:nth-child(odd) td {
+    background-color: #efeeee;
+}
+
+
+</style>
+<body>
+    <div class="container">
+        <h1>Sort Table</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Age</th>
+            <th>Id</th>
+            <th>Area</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Joe</td>
+            <td>Allen</td>
+            <td>33</td>
+            <td>19281</td>
+            <td>446</td>
+          </tr>
+          <tr>
+            <td>Alan</td>
+            <td>Kowalsky</td>
+            <td>63</td>
+            <td>923</td>
+            <td>567</td>
+          </tr>
+          <tr>
+            <td>Victor</td>
+            <td>Scendell</td>
+            <td>15</td>
+            <td>12345</td>
+            <td>5687</td>
+          </tr>
+          <tr>
+            <td>Jennifer</td>
+            <td>Lescott</td>
+            <td>44</td>
+            <td>7821</td>
+            <td>23</td>
+          </tr>
+          <tr>
+            <td>Paul</td>
+            <td>Finley</td>
+            <td>44</td>
+            <td>7821</td>
+            <td>278</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+</body>
+<script>
+
+    (function(){
+      var table = document.querySelector("table"),
+          ths = table.querySelectorAll("thead th"),
+          row = table.querySelectorAll("tbody tr"),
+          tBody = table.querySelector("tbody"),
+          docF = document.createDocumentFragment();
+     
+      function sortMe(e){
+        var thsArray = [].slice.call(ths),
+            rowArray = [].slice.call(row),
+            target = e.target,
+            thsIndex = thsArray.indexOf(target);
+        
+        rowArray.sort(function(a,b){
+          var tdA = a.children[thsIndex].textContent,
+              tdB = b.children[thsIndex].textContent;
+          
+          if (tdA > tdB){
+            return 1;
+          }else if (tdA < tdB){
+            return -1;
+          }else{
+            return 0;
+          }
+        });
+        
+        rowArray.forEach(function(row){
+          docF.appendChild(row)
+        });
+        
+        tBody.appendChild(docF);
+        
+      }
+      
+      for (var i = 0; i < ths.length; i++){
+        ths[i].addEventListener("click", sortMe, false)
+      }
+      
+     
+    })()
+        </script>
+</html>
